@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
@@ -6,17 +7,15 @@ using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
-using Nuke.Common.Tools.MSBuild;
-using Nuke.Common.Tools.NuGet;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
+using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 
 [CheckBuildProjectConfigurations]
-class Build : NukeBuild
+class Builder : NukeBuild
 {
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
@@ -34,7 +33,7 @@ class Build : NukeBuild
     AbsolutePath TestsDirectory => RootDirectory / "tests";
     AbsolutePath OutputDirectory => RootDirectory / "output";
     
-    public static int Main () => Execute<Build>(x => x.Compile);
+    public static int Main () => Execute<Builder>(x => x.Build);
 
     Target Clean => _ => _
         .Before(Restore)
@@ -54,9 +53,9 @@ class Build : NukeBuild
                 .SetProjectFile(Solution));
         });
 
-    Target Compile => _ => _
+    Target Build => _ => _
         .DependsOn(Restore)
-        .Description("Compiles the Nuke.Tools.Retype library package from source code.")
+        .Description("Builds the Torq.Nuke.Retype library package from source code.")
         .Executes(() =>
         {
             DotNetBuild(s => s
@@ -69,8 +68,8 @@ class Build : NukeBuild
         });
 
     Target Package => _ => _
-        .DependsOn(Compile)
-        .Description("Packages the Nuke.Tools.Retype library for the supported dotnet platforms into a Nuget package file.")
+        .DependsOn(Build)
+        .Description("Packages the Torq.Nuke.Retype library for the supported dotnet platforms into a Nuget package file.")
         .Executes(() =>
         {
             DotNetPack(s => s
@@ -78,20 +77,24 @@ class Build : NukeBuild
                 .SetConfiguration(Configuration)
                 .SetProject(Solution)
                 .SetOutputDirectory(OutputDirectory)
+                .EnableNoRestore()
                 .EnableNoBuild());
         });
     
     Target Publish => _ => _
         .Description("Publishes the Nuke.build retype tool library to a Nuget package feed.")
         .DependsOn(Package)
-        .DependsOn(Clean)
+        .DependsOn(Clean)   // Ensure the output folder is cleaned out so the push only pushes the newly built package.
         .Requires(() => NugetApiUrl)
         .Requires(() => NugetApiKey)
         .Requires(() => Configuration.Equals(Configuration.Release))
         .Executes(() =>
         {
+            string target = GlobFiles(OutputDirectory, "*.nupkg")
+                .Single(x => x.Contains(GitVersion.NuGetVersionV2));
+
             DotNetNuGetPush(s => s
-                .SetTargetPath(RootDirectory)
+                .SetTargetPath(target)
                 .SetSource(NugetApiUrl)
                 .SetApiKey(NugetApiKey));
         });
@@ -101,6 +104,6 @@ class Build : NukeBuild
                      "This manual action only needs to be taken when a new Retype.json version has been defined.")
         .Executes(() =>
         {
-            GenerateCode("source/Retype.json", namespaceProvider: tool => $"Nuke.Tools.Retype");
+            GenerateCode("source/Retype.json", namespaceProvider: tool => $"Torq.Nuke.Retype");
         });
 }

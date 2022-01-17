@@ -20,4 +20,10 @@
     <None Remove="..\build.cmd" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\.gitignore">
+      <Link>config\.gitignore</Link>
+    </Content>
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.Tools.Retype", "source\Nuke.Tools.Retype.csproj", "{4E5CFB40-CD0F-40D3-875B-6052E208E370}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Torq.Nuke.Retype", "source\Torq.Nuke.Retype.csproj", "{4E5CFB40-CD0F-40D3-875B-6052E208E370}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -79,8 +79,8 @@
           "items": {
             "type": "string",
             "enum": [
+              "Build",
               "Clean",
-              "Compile",
               "Generate",
               "Package",
               "Publish",
@@ -98,8 +98,8 @@
           "items": {
             "type": "string",
             "enum": [
+              "Build",
               "Clean",
-              "Compile",
               "Generate",
               "Package",
               "Publish",
