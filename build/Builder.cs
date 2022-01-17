@@ -1,9 +1,9 @@
+using System;
 using System.Collections;
 using System.IO;
 using System.Linq;
 using Nuke.Common;
 using Nuke.Common.Execution;
-using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
@@ -14,6 +14,7 @@ using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
+using static Nuke.Common.Tools.GitVersion.GitVersionTasks;
 using static Serilog.Log;
 using static System.Environment;
 
@@ -30,11 +31,10 @@ class Builder : NukeBuild
     string NugetApiKey;
 
     [Solution] readonly Solution Solution;
-    [GitRepository] readonly GitRepository GitRepository;
-    [GitVersion] readonly GitVersion GitVersion;
     AbsolutePath SourceDirectory => RootDirectory / "source";
     AbsolutePath TestsDirectory => RootDirectory / "tests";
     AbsolutePath OutputDirectory => RootDirectory / "output";
+    private GitVersion gitVersion;
     
     public static int Main () => Execute<Builder>(x => x.Build);
 
@@ -130,12 +130,20 @@ class Builder : NukeBuild
             string toolPath = settings.SetFramework(attribute.Framework).ProcessToolPath;
             string status = File.Exists(toolPath) ? "exists" : "missing";
             Information($"GitVersion tool {status}: {toolPath}");
-
-            Information("GitVersion process output follows:");
-            GitVersion gitVersion = GitVersionTasks.GitVersion(s => s
-                .SetFramework("net5.0")
-                .EnableProcessLogOutput()
-                .EnableNoCache())
-                .Result;
         });
+
+    private GitVersion GitVersion =>
+        gitVersion ??= GitVersionTasks.GitVersion(s => s
+                .SetFramework("net5.0")
+                .DisableProcessLogOutput()
+                .When(Verbosity == Verbosity.Verbose, EnableVerboseLogOutput)
+                .EnableNoCache())
+            .Result;
+
+    GitVersionSettings EnableVerboseLogOutput(GitVersionSettings settings)
+    {
+        return settings
+            .SetVerbosity(GitVersionVerbosity.debug)
+            .EnableProcessLogOutput();
+    }
 }
