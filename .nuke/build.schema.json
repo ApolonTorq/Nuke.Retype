@@ -48,7 +48,7 @@
         },
         "NugetApiKey": {
           "type": "string",
-          "description": "The publishing API key for the package destination feed at NugetApiUrl"
+          "description": "The publishing API key for the package destination feed at the Nuget API URL"
         },
         "NugetApiUrl": {
           "type": "string",
@@ -81,9 +81,9 @@
             "enum": [
               "Clean",
               "Compile",
-              "GenerateToolCode",
+              "Generate",
               "Package",
-              "PublishToNuget",
+              "Publish",
               "Restore"
             ]
           }
@@ -100,9 +100,9 @@
             "enum": [
               "Clean",
               "Compile",
-              "GenerateToolCode",
+              "Generate",
               "Package",
-              "PublishToNuget",
+              "Publish",
               "Restore"
             ]
           }

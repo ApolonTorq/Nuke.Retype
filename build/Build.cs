@@ -21,10 +21,10 @@ class Build : NukeBuild
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
     
-    [Parameter("The destination Nuget feed to publish packages to. This defaults to nuget.org")]
+    [Parameter("The destination Nuget feed to publish packages to. This defaults to nuget.org.")]
     string NugetApiUrl = "https://api.nuget.org/v3/index.json";
     
-    [Parameter("The publishing API key for the package destination feed at NugetApiUrl.")]
+    [Parameter("The publishing API key for the package destination feed at the Nuget API URL.")]
     string NugetApiKey;
 
     [Solution] readonly Solution Solution;
@@ -50,9 +50,8 @@ class Build : NukeBuild
         .Description("Restores package dependencies from the package source.")
         .Executes(() =>
         {
-            MSBuild(s => s
-                .SetTargetPath(Solution)
-                .SetTargets("Restore"));
+            DotNetRestore(s => s
+                .SetProjectFile(Solution));
         });
 
     Target Compile => _ => _
@@ -60,15 +59,13 @@ class Build : NukeBuild
         .Description("Compiles the Nuke.Tools.Retype library package from source code.")
         .Executes(() =>
         {
-            MSBuild(s => s
-                .SetTargetPath(Solution)
-                .SetTargets("Rebuild")
+            DotNetBuild(s => s
+                .SetProjectFile(Solution)
                 .SetConfiguration(Configuration)
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
                 .SetInformationalVersion(GitVersion.InformationalVersion)
-                .SetMaxCpuCount(Environment.ProcessorCount)
-                .SetNodeReuse(IsLocalBuild));
+                .EnableNoRestore());
         });
 
     Target Package => _ => _
@@ -78,13 +75,16 @@ class Build : NukeBuild
         {
             DotNetPack(s => s
                 .SetVersion(GitVersion.NuGetVersionV2)
+                .SetConfiguration(Configuration)
                 .SetProject(Solution)
-                .SetOutputDirectory(OutputDirectory));
+                .SetOutputDirectory(OutputDirectory)
+                .EnableNoBuild());
         });
     
-    Target PublishToNuget => _ => _
+    Target Publish => _ => _
         .Description("Publishes the Nuke.build retype tool library to a Nuget package feed.")
-        .DependsOn(Compile)
+        .DependsOn(Package)
+        .DependsOn(Clean)
         .Requires(() => NugetApiUrl)
         .Requires(() => NugetApiKey)
         .Requires(() => Configuration.Equals(Configuration.Release))
@@ -96,7 +96,7 @@ class Build : NukeBuild
                 .SetApiKey(NugetApiKey));
         });
     
-    Target GenerateToolCode => _ => _
+    Target Generate => _ => _
         .Description("Generates the Retype.Generated.cs code which serves as the basis for the Retype tool's settings and task classes. " +
                      "This manual action only needs to be taken when a new Retype.json version has been defined.")
         .Executes(() =>
