@@ -11,7 +11,9 @@ environment:
 nuget:
   disable_publish_on_pr: true
 build_script:
-- pwsh: ./build.ps1 Rebuild --verbosity=Verbose
+- pwsh: >-
+  ./build.ps1 Environment
+  ./build.ps1 Rebuild --verbosity=Verbose
 test: off
 deploy_script:
 - pwsh: >-

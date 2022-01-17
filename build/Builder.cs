@@ -1,4 +1,5 @@
-using System;
+using System.Collections;
+using System.IO;
 using System.Linq;
 using Nuke.Common;
 using Nuke.Common.Execution;
@@ -8,13 +9,12 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
-using Serilog;
 using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Serilog.Log;
-
+using static System.Environment;
 
 [CheckBuildProjectConfigurations]
 class Builder : NukeBuild
@@ -113,5 +113,21 @@ class Builder : NukeBuild
         .Executes(() =>
         {
             GenerateCode("source/Retype.json", namespaceProvider: tool => $"Torq.Nuke.Retype");
+        });
+    
+    Target Environment => _ => _
+        .Description("Reports on the environment so as to assist in identifying problems associated with the build.")
+        .Executes(() =>
+        {
+            foreach (DictionaryEntry variable in GetEnvironmentVariables())
+            {
+                Information($"{variable.Key} = {variable.Value}");
+            }
+
+            var attribute = new GitVersionAttribute();
+            var settings = new GitVersionSettings();
+            string toolPath = settings.SetFramework(attribute.Framework).ProcessToolPath;
+            string status = File.Exists(toolPath) ? "exists" : "missing";
+            Information($"GitVersion tool {status}: {toolPath}");
         });
 }

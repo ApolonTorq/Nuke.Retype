@@ -81,6 +81,7 @@
             "enum": [
               "Build",
               "Clean",
+              "Environment",
               "Generate",
               "Package",
               "Publish",
@@ -101,6 +102,7 @@
             "enum": [
               "Build",
               "Clean",
+              "Environment",
               "Generate",
               "Package",
               "Publish",
