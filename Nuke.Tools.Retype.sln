@@ -2,14 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.Tools.Retype", "source\Nuke.Tools.Retype.csproj", "{4E5CFB40-CD0F-40D3-875B-6052E208E370}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build", "build\Build.csproj", "{1E814EC4-AFE5-4215-A06E-6729658D1262}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{3D9925D4-39B8-4D2B-8E76-8A4F90DBB754}"
-	ProjectSection(SolutionItems) = preProject
-		.gitignore = .gitignore
-		global.json = global.json
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,9 +12,5 @@ Global
 		{4E5CFB40-CD0F-40D3-875B-6052E208E370}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E5CFB40-CD0F-40D3-875B-6052E208E370}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E5CFB40-CD0F-40D3-875B-6052E208E370}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1E814EC4-AFE5-4215-A06E-6729658D1262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E814EC4-AFE5-4215-A06E-6729658D1262}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E814EC4-AFE5-4215-A06E-6729658D1262}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E814EC4-AFE5-4215-A06E-6729658D1262}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

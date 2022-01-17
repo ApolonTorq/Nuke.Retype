@@ -78,7 +78,7 @@ class Build : NukeBuild
         {
             DotNetPack(s => s
                 .SetVersion(GitVersion.NuGetVersionV2)
-                .EnableNoDependencies()
+                .SetProject(Solution)
                 .SetOutputDirectory(OutputDirectory));
         });
     
