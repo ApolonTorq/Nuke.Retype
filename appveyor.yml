@@ -11,8 +11,8 @@ environment:
 nuget:
   disable_publish_on_pr: true
 build_script:
-- pwsh: ./build.ps1 Rebuild
+- pwsh: ./build.ps1 Rebuild --verbosity=Verbose
 test: off
 deploy_script:
 - pwsh: >-
-    ./build.ps1 Publish --NugetApiKey $env:NugetApiKey
+    ./build.ps1 Publish --NugetApiKey $env:NugetApiKey --verbosity=Verbose
