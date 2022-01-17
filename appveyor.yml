@@ -14,7 +14,7 @@ build_script:
   - pwsh: >-
       ./build.ps1 Environment
       
-      ./build.ps1 Rebuild  --verbosity=Verbose
+      ./build.ps1 Rebuild --verbosity Verbose
 test: off
 deploy_script:
-  - pwsh: ./build.ps1 Publish --NugetApiKey $env:NugetApiKey --verbosity=Verbose
+  - pwsh: ./build.ps1 Publish --NugetApiKey $env:NugetApiKey --verbosity Verbose
