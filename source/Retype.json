@@ -1,0 +1,99 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://retype.com/guides/cli/"
+  ],
+  "name": "Retype",
+  "officialUrl": "https://retype.com",
+  "help": "Retype is an ultra-high-performance generator that builds a website based on simple text files. Focus on your writing while Retype builds the rest.",
+  "customExecutable": true,
+  "tasks": [
+    {
+      "postfix": "Build",
+      "definiteArgument": "build",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "A custom path to the output directory."
+          },
+          {
+            "name": "Secret",
+            "type": "string",
+            "format": "--secret {value}",
+            "help": "Retype secret key."
+          },
+          {
+            "name": "Override",
+            "type": "string",
+            "format": "--override {value}",
+            "help": "JSON configuration overriding Retype config values."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Watch",
+      "commonPropertySets": [
+        "host-port"
+      ],
+      "definiteArgument": "watch",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Secret",
+            "type": "string",
+            "format": "--secret {value}",
+            "help": "Retype secret key."
+          },
+          {
+            "name": "WatchApi",
+            "type": "bool",
+            "format": "--api",
+            "help": "Watch for API changes."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Run",
+      "commonPropertySets": [
+        "host-port"
+      ],
+      "definiteArgument": "run",
+      "settingsClass": {}
+    }
+  ],
+  "commonTaskProperties": [
+    {
+      "name": "Config",
+      "type": "string",
+      "format": "{value}",
+      "help": "Path to the project root or a Retype config."
+    },
+    {
+      "name": "Verbose",
+      "type": "bool",
+      "format": "--verbose",
+      "help": "Turn verbose logging on."
+    }
+  ],
+  "commonTaskPropertySets": {
+    "host-port": [
+      {
+        "name": "Host",
+        "type": "string",
+        "format": "--host {value}",
+        "help": "Custom host name or IP address."
+      },
+      {
+        "name": "Port",
+        "type": "int",
+        "format": "--port {value}",
+        "help": "Custom TCP Port."
+      }
+    ]
+  }
+}
