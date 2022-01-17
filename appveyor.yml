@@ -4,6 +4,7 @@ pull_requests:
 branches:
   only:
   - main
+image: Visual Studio 2022
 environment:
   NugetApiKey:
     secure: AamTWVCKJufm2jab84spEoM0OrE87GyXhD8WflcEAV14fZtvVQni5vpEVT3f+OkE
