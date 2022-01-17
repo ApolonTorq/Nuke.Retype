@@ -8,10 +8,12 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
+using static Serilog.Log;
 
 
 [CheckBuildProjectConfigurations]
@@ -37,7 +39,7 @@ class Builder : NukeBuild
 
     Target Clean => _ => _
         .Before(Restore)
-        .Description("Cleans out the derived files generated from a build.")
+        .Description("Deletes the object, executable and package files generated from builds.")
         .Executes(() =>
         {
             SourceDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
@@ -55,7 +57,7 @@ class Builder : NukeBuild
 
     Target Build => _ => _
         .DependsOn(Restore)
-        .Description("Builds the Torq.Nuke.Retype library package from source code.")
+        .Description("Builds the Torq.Nuke.Retype library from source code.")
         .Executes(() =>
         {
             DotNetBuild(s => s
@@ -67,8 +69,15 @@ class Builder : NukeBuild
                 .EnableNoRestore());
         });
 
-    Target Package => _ => _
+    Target Rebuild => _ => _
+        .DependsOn(Clean)
         .DependsOn(Build)
+        .Description("Cleans out the old generated files then Builds the Torq.Nuke.Retype library from scratch.")
+        .Executes(() =>
+            Information("Rebuild complete (Cleaned and Built)")
+            );
+
+    Target Package => _ => _
         .Description("Packages the Torq.Nuke.Retype library for the supported dotnet platforms into a Nuget package file.")
         .Executes(() =>
         {
@@ -84,7 +93,6 @@ class Builder : NukeBuild
     Target Publish => _ => _
         .Description("Publishes the Nuke.build retype tool library to a Nuget package feed.")
         .DependsOn(Package)
-        .DependsOn(Clean)   // Ensure the output folder is cleaned out so the push only pushes the newly built package.
         .Requires(() => NugetApiUrl)
         .Requires(() => NugetApiKey)
         .Requires(() => Configuration.Equals(Configuration.Release))

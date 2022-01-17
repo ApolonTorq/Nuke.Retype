@@ -84,6 +84,7 @@
               "Generate",
               "Package",
               "Publish",
+              "Rebuild",
               "Restore"
             ]
           }
@@ -103,6 +104,7 @@
               "Generate",
               "Package",
               "Publish",
+              "Rebuild",
               "Restore"
             ]
           }
