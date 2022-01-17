@@ -6,6 +6,7 @@ using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
@@ -129,5 +130,12 @@ class Builder : NukeBuild
             string toolPath = settings.SetFramework(attribute.Framework).ProcessToolPath;
             string status = File.Exists(toolPath) ? "exists" : "missing";
             Information($"GitVersion tool {status}: {toolPath}");
+
+            Information("GitVersion process output follows:");
+            GitVersion gitVersion = GitVersionTasks.GitVersion(s => s
+                .SetFramework("net5.0")
+                .EnableProcessLogOutput()
+                .EnableNoCache())
+                .Result;
         });
 }
