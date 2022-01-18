@@ -6,16 +6,14 @@ branches:
   - main
 image: Visual Studio 2022
 environment:
+  # Workaround for https://github.com/GitTools/GitVersion/issues/1627
   IGNORE_NORMALISATION_GIT_HEAD_MOVE: 1
   NugetApiKey:
     secure: AamTWVCKJufm2jab84spEoM0OrE87GyXhD8WflcEAV14fZtvVQni5vpEVT3f+OkE
 nuget:
   disable_publish_on_pr: true
 build_script:
-  - pwsh: >-
-      ./build.ps1 Environment
-      
-      ./build.ps1 Rebuild --verbosity Verbose
+  - pwsh: ./build.ps1 Rebuild --verbosity Verbose
 test: off
 deploy_script:
   - pwsh: ./build.ps1 Publish --NugetApiKey $env:NugetApiKey --verbosity Verbose
