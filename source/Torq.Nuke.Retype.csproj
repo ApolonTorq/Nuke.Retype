@@ -1,15 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net5;net472</TargetFrameworks>
+        <TargetFrameworks>net5.0;net472</TargetFrameworks>
         <LangVersion>latest</LangVersion>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>Nuke.build Retype markdown addon</Title>
         <Description>Nuke.build addon for strongly typed Retype.com documentation generation tasks.</Description>
         <PackageProjectUrl>https://github.com/ApolonTorq/Nuke.Retype</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/ApolonTorq/Nuke.Retype/blob/main/LICENSE</PackageLicenseUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/ApolonTorq/Nuke.Retype</RepositoryUrl>
-        <NoWarn>NETSDK1138;NU5125</NoWarn>
+        <Authors>Apolon</Authors>
+        <NoWarn>NETSDK1138</NoWarn>
+        <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
 
     <ItemGroup>

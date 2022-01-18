@@ -15,7 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Nuke.Tools.Retype
+namespace Torq.Nuke.Retype
 {
     /// <summary>
     ///   <p>Retype is an ultra-high-performance generator that builds a website based on simple text files. Focus on your writing while Retype builds the rest.</p>

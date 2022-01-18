@@ -1,4 +1,4 @@
-namespace Nuke.Tools.Retype
+namespace Torq.Nuke.Retype
 {
     public partial class RetypeWatchSettings
     {

@@ -1,6 +1,6 @@
 using Nuke.Common.Tooling;
 
-namespace Nuke.Tools.Retype
+namespace Torq.Nuke.Retype
 {
     public partial class RetypeTasks
     {
