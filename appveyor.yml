@@ -6,7 +6,7 @@ branches:
   - main
 image: Visual Studio 2022
 environment:
-  NugetApiKey:
+  IGNORE_NORMALISATION_GIT_HEAD_MOVE: 1
     secure: AamTWVCKJufm2jab84spEoM0OrE87GyXhD8WflcEAV14fZtvVQni5vpEVT3f+OkE
 nuget:
   disable_publish_on_pr: true
