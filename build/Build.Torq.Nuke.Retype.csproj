@@ -8,6 +8,8 @@
     <NukeScriptDirectory>..</NukeScriptDirectory>
     <NukeTelemetryVersion>1</NukeTelemetryVersion>
     <LangVersion>10</LangVersion>
+    <!-- Needed for GitVersion to operate   -->
+    <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
   </PropertyGroup>
 
   <ItemGroup>
