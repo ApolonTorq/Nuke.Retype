@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.IO;
 using System.Linq;
 using Nuke.Common;
-using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
@@ -12,13 +10,13 @@ using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
-using static Nuke.Common.Tools.GitVersion.GitVersionTasks;
 using static Serilog.Log;
 using static System.Environment;
+// ReSharper disable InconsistentNaming
 
-[CheckBuildProjectConfigurations]
+namespace Build.Torq.Nuke.Retype;
+
 class Builder : NukeBuild
 {
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
@@ -76,7 +74,7 @@ class Builder : NukeBuild
         .Description("Cleans out the old generated files then Builds the Torq.Nuke.Retype library from scratch.")
         .Executes(() =>
             Information("Rebuild complete (Cleaned and Built)")
-            );
+        );
 
     Target Package => _ => _
         .Description("Packages the Torq.Nuke.Retype library for the supported dotnet platforms into a Nuget package file.")
@@ -99,7 +97,7 @@ class Builder : NukeBuild
         .Requires(() => Configuration.Equals(Configuration.Release))
         .Executes(() =>
         {
-            string target = GlobFiles(OutputDirectory, "*.nupkg")
+            string target = OutputDirectory.GlobFiles("*.nupkg")
                 .Single(x => x.Contains(GitVersion.NuGetVersionV2));
 
             DotNetNuGetPush(s => s
