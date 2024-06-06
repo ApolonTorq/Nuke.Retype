@@ -9,7 +9,7 @@ environment:
   # Workaround for https://github.com/GitTools/GitVersion/issues/1627
   IGNORE_NORMALISATION_GIT_HEAD_MOVE: 1
   NugetApiKey:
-    secure: 7npwdiVp1xFZ3qi13xNwueAFF1Z2bTuM+xMfcwh8j10=
+    secure: RR+ggAKwi1QNOtVC29N40t1Ah4PH6vclmNd2wiQ5D+lNWGWy73Wtiy+ur3WuS4gp
 nuget:
   disable_publish_on_pr: true
 build_script:
