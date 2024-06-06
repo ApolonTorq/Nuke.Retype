@@ -6,7 +6,7 @@ namespace Torq.Nuke.Retype
     {
         internal static string GetToolPath()
         {
-            return ToolPathResolver.GetPackageExecutable("retypeapp", "retype.dll", RetypeVersion);
+            return NuGetToolPathResolver.GetPackageExecutable("retypeapp", "retype.dll", RetypeVersion);
         }
 
         internal static string RetypeVersion = null;

@@ -2,6 +2,16 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Torq.Nuke.Retype", "source\Torq.Nuke.Retype.csproj", "{4E5CFB40-CD0F-40D3-875B-6052E208E370}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Root Folder", "Root Folder", "{2F94CAFD-B1A6-4F11-8A11-070DD4F6BFD5}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		GitVersion.yml = GitVersion.yml
+		global.json = global.json
+		README.md = README.md
+		build.ps1 = build.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

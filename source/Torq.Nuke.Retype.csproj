@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net5.0;net472</TargetFrameworks>
+        <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
         <LangVersion>latest</LangVersion>
         <Title>Nuke.build Retype markdown addon</Title>
         <Description>Nuke.build addon for strongly typed Retype.com documentation generation tasks.</Description>
@@ -15,7 +15,7 @@
 
     <ItemGroup>
       <PackageReference Include="Nuke.CodeGeneration" Version="6.0.1" />
-      <PackageReference Include="Nuke.Common" Version="6.0.1" />
+      <PackageReference Include="Nuke.Common" Version="8.0.0" />
     </ItemGroup>
 
 </Project>

@@ -227,7 +227,7 @@ namespace Torq.Nuke.Retype
         ///   Path to the Retype executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => RetypeTasks.RetypeLogger;
+        public override Action<OutputType, string> ProcessLogger => RetypeTasks.RetypeLogger;
         /// <summary>
         ///   A custom path to the output directory.
         /// </summary>
@@ -274,7 +274,7 @@ namespace Torq.Nuke.Retype
         ///   Path to the Retype executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => RetypeTasks.RetypeLogger;
+        public override Action<OutputType, string> ProcessLogger => RetypeTasks.RetypeLogger;
         /// <summary>
         ///   Retype secret key.
         /// </summary>
@@ -326,7 +326,7 @@ namespace Torq.Nuke.Retype
         ///   Path to the Retype executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => RetypeTasks.RetypeLogger;
+        public override Action<OutputType, string> ProcessLogger => RetypeTasks.RetypeLogger;
         /// <summary>
         ///   Custom host name or IP address.
         /// </summary>
