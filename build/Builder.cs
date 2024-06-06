@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Nuke.Common;
@@ -97,8 +98,8 @@ class Builder : NukeBuild
         .Requires(() => Configuration.Equals(Configuration.Release))
         .Executes(() =>
         {
-            string target = OutputDirectory.GlobFiles("*.nupkg")
-                .Single(x => x.Contains(GitVersion.NuGetVersionV2));
+            IReadOnlyCollection<AbsolutePath> nugetPackages = OutputDirectory.GlobFiles("*.nupkg");
+            string target = nugetPackages.Single(x => x.Name.Contains(GitVersion.NuGetVersionV2));
 
             DotNetNuGetPush(s => s
                 .SetTargetPath(target)
